@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+int main() {
+    int a = 3; // Choose a value for 'a' (must be coprime with 26)
+    int b = 5; // Choose a value for 'b'
+
+    // Check if 'a' is coprime with 26
+    if (a % 2 == 0 || a % 13 == 0) {
+        printf("Value of 'a' is not allowed. 'a' must be coprime with 26.\n");
+        return 1;
+    }
+
+    // Encrypting a plaintext letter 'p'
+    int p = 10; // Example: ASCII value of 'K'
+    int C = (a * p + b) % 26; // Encrypt using the formula
+
+    // Decrypting a ciphertext letter 'C'
+    int inverse_a;
+    for (inverse_a = 1; inverse_a < 26; inverse_a++) {
+        if ((a * inverse_a) % 26 == 1) {
+            break;
+        }
+    }
+    int p_decrypted = (inverse_a * (C - b + 26)) % 26; // Decrypt using the inverse of 'a'
+
+    printf("Encrypted letter: %c\n", 'A' + C); // Output encrypted letter
+    printf("Decrypted letter: %c\n", 'A' + p_decrypted); // Output decrypted letter
+
+    return 0;
+}
