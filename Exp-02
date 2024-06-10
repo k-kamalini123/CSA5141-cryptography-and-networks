@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// Function to perform the monoalphabetic substitution encryption
+void encrypt(char *plaintext, const char *key) {
+    char ciphertext[strlen(plaintext) + 1];
+    int i;
+
+    // Iterate through each character of the plaintext
+    for (i = 0; plaintext[i] != '\0'; i++) {
+        char ch = plaintext[i];
+
+        // Encrypt uppercase letters
+        if (isupper(ch)) {
+            ciphertext[i] = key[ch - 'A'];
+        }
+        // Encrypt lowercase letters
+        else if (islower(ch)) {
+            ciphertext[i] = tolower(key[ch - 'a']);
+        }
+        // Leave non-alphabet characters unchanged
+        else {
+            ciphertext[i] = ch;
+        }
+    }
+
+    ciphertext[i] = '\0';  // Null-terminate the ciphertext string
+
+    // Print the encrypted text
+    printf("Encrypted string: %s\n", ciphertext);
+}
+
+int main() {
+    char plaintext[100];
+    char key[27];
+
+    // Input the plaintext
+    printf("Enter a string: ");
+    fgets(plaintext, sizeof(plaintext), stdin);
+
+    // Remove the newline character at the end of the string (if any)
+    plaintext[strcspn(plaintext, "\n")] = '\0';
+
+    // Input the substitution key (must be 26 characters)
+    printf("Enter the 26-character substitution key: ");
+    fgets(key, sizeof(key), stdin);
+
+    // Remove the newline character at the end of the key (if any)
+    key[strcspn(key, "\n")] = '\0';
+
+    // Ensure the key is exactly 26 characters long
+    if (strlen(key) != 26) {
+        printf("Invalid key. The substitution key must be exactly 26 characters long.\n");
+        return 1;
+    }
+
+    // Encrypt the plaintext using the substitution key
+    encrypt(plaintext, key);
+
+    return 0;
+}
