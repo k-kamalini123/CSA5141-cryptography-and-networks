@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    char ciphertext[] = "B...U..."; // Sample ciphertext
+    int len = sizeof(ciphertext) / sizeof(ciphertext[0]) - 1;
+    char plaintext[len];
+
+    int a = 15; // Example: (a, b) = (15, 8) for simplicity
+    int b = 8;
+    int a_inv = 7; // Multiplicative inverse of 15 mod 26 is 7
+
+    for (int i = 0; i < len; i++) {
+        if (ciphertext[i] >= 'A' && ciphertext[i] <= 'Z')
+            plaintext[i] = (a_inv * (ciphertext[i] - 'A' - b + 26) % 26) + 'A';
+        else
+            plaintext[i] = ciphertext[i];
+    }
+    plaintext[len] = '\0'; // Null-terminate the string
+
+    printf("Plaintext: %s\n", plaintext);
+    return 0;
+}
